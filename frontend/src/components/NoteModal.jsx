@@ -27,7 +27,7 @@ const NoteModal = ({ setIsModalOpen }) => {
       toast.success("New job added")
       setTimeout(() => {
         setIsModalOpen(false); // Close the modal after saving
-      }, 1000)
+      }, 500)
     } catch (error) {
       console.error('Failed to save note:', error);
     }
@@ -37,7 +37,7 @@ const NoteModal = ({ setIsModalOpen }) => {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-11/12 max-w-md mx-auto">
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          Create Note
+          Add job
         </h2>
 
         <input
@@ -95,7 +95,7 @@ const NoteModal = ({ setIsModalOpen }) => {
             onClick={handleSaveNote}
             className="ml-2 px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            Save Note
+            Add
           </button>
         </div>
       </div>

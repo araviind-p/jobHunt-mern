@@ -46,6 +46,10 @@ const UserSchema = new mongoose.Schema({
       enum: ['applied', 'interviewing', 'offered', 'rejected'], // Define allowed values
       required: true,
     },
+    createdAt:{
+      type:Date,
+      default:Date.now
+    }
   }],
   createdAt: {
     type: Date,

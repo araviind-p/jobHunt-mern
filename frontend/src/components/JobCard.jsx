@@ -1,4 +1,3 @@
-// JobCard.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa'; // Import the delete icon
@@ -11,15 +10,15 @@ const JobCard = ({ job, onDelete }) => {
   const getStatusClasses = (status) => {
     switch (status) {
       case 'applied':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-blue-100 text-blue-800  p-2 rounded-md';
       case 'interviewing':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 text-yellow-800 p-2 rounded-md';
       case 'offered':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 text-green-800 p-2 rounded-md';
       case 'rejected':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-100 text-red-800 p-2 rounded-md';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-gray-800 p-2 rounded-md';
     }
   };
 
@@ -33,6 +32,12 @@ const JobCard = ({ job, onDelete }) => {
     }
   };
 
+  // Format the createdAt date
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   return (
     <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm relative">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -43,9 +48,13 @@ const JobCard = ({ job, onDelete }) => {
         URL: <a href={job.url} target="_blank" rel="noopener noreferrer" className="text-blue-500">{job.url}</a>
       </p>
       <p className="text-gray-600 dark:text-gray-300">Notes: {job.notes}</p>
-      <p className={`px-2 py-1 rounded-md text-sm font-medium ${getStatusClasses(job.jobStatus)}`}>
-        Status: {job.jobStatus}
+      <p className="px-2 py-1 my-2 w-fit rounded-md text-sm font-medium text-gray-300">
+        Status: <span className={getStatusClasses(job.jobStatus)}>{job.jobStatus}</span>
       </p>
+
+      <p className="text-gray-600 dark:text-gray-300">Created At: {
+
+        formatDate(job.createdAt)}</p> {/* Display createdAt */}
       <button
         onClick={() => setIsEditing(true)}
         className="mt-2 px-4 py-2 text-white bg-blue-700 rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-600"

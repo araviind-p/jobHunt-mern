@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortField, setSortField] = useState('createdAt'); // Default sort field
   const navigate = useNavigate();
 
   const handleNewJob = (newJob) => {
@@ -32,32 +33,40 @@ const Dashboard = () => {
     fetchUserData();
   }, [navigate, handleNewJob]);
 
-  // Dashboard.js
+  // Sort jobs based on the selected field
+  const sortedJobs = [...jobs].sort((a, b) => {
+    if (sortField === 'createdAt') {
+      return new Date(b.createdAt) - new Date(a.createdAt); // Date comparison
+    }
+    if (a[sortField] < b[sortField]) return -1;
+    if (a[sortField] > b[sortField]) return 1;
+    return 0;
+  });
+
   const handleDeleteJob = (jobId) => {
     setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
     toast.success("Job deleted");
   };
 
-
   const handleLogout = async () => {
     try {
       const response = await axios.get('http://localhost:5000/auth/logout', { withCredentials: true });
       if (response.status === 200) {
-        toast.success("Logout success")
+        toast.success("Logout success");
         setTimeout(() => {
           navigate('/');
-        }, 1000)
+        }, 1000);
       }
     } catch (error) {
       console.error('Logout failed:', error);
-      toast.error(err.message)
+      toast.error(error.message);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className=" flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       {/* Navigation Bar */}
-      <nav className="w-full bg-white dark:bg-gray-800 shadow-lg p-4 flex justify-between items-center fixed top-0 left-0 z-50">
+      <nav className="w-full bg-white dark:bg-gray-900 shadow-lg p-4 flex justify-between items-center fixed top-0 left-0 z-50">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           Job Hunt
         </h1>
@@ -92,15 +101,48 @@ const Dashboard = () => {
             </div>
 
             <div className="mt-6">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Your Jobs</h2>
+              {
+                jobs.length > 0 && (
+                  <div className='flex justify-center mb-4'>
+                    <h2 className="text-2xl font-semibold text-gray-900 dark:text-green-500">YOUR JOBS</h2>
+                  </div>
+                )
+              }
+
+              {/* Sort Dropdown */}
+              {
+                jobs.length > 0 && (
+
+                  <div className="flex justify-end mb-4">
+                    <select
+                      value={sortField}
+                      onChange={(e) => setSortField(e.target.value)}
+                      className="px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md"
+                    >
+                      <option value="companyName">Company Name</option>
+                      <option value="jobRole">Job Role</option>
+                      <option value="jobStatus">Job Status</option>
+                      <option value="notes">Notes</option>
+                      <option value="createdAt">Created At</option> {/* New option for createdAt */}
+                    </select>
+                  </div>
+                )
+              }
+
               {jobs.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-                  {jobs.map((job, index) => (
+                  {sortedJobs.map((job, index) => (
                     <JobCard key={index} job={job} onDelete={handleDeleteJob} />
                   ))}
                 </div>
               ) : (
-                <p className="mt-4 text-gray-600 dark:text-gray-300">No jobs added yet.</p>
+                <div className='flex justify-center'>
+
+                  <p className="mt-4 cursor-pointer text-gray-900 dark:text-gray-100 w-2/5 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 bg-blue-600 dark:bg-blue-700 flex justify-center p-4 rounded-md" onClick={() => setIsModalOpen(true)}>
+                    Add some jobs
+                  </p>
+
+                </div>
               )}
 
             </div>
