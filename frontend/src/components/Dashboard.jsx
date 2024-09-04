@@ -21,7 +21,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/profile', { withCredentials: true });
+        const response = await axios.get('https://jobhunt-mern.onrender.com/profile', { withCredentials: true });
         setUser(response.data);
         setJobs(response.data.jobs || []);
       } catch (error) {
@@ -50,7 +50,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/auth/logout', { withCredentials: true });
+      const response = await axios.get('https://jobhunt-mern.onrender.com/auth/logout', { withCredentials: true });
       if (response.status === 200) {
         toast.success("Logout success");
         setTimeout(() => {

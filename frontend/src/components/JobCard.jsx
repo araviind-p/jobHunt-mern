@@ -24,7 +24,7 @@ const JobCard = ({ job, onDelete }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/deleteJob/${job._id}`, { withCredentials: true });
+      await axios.delete(`https://jobhunt-mern.onrender.com/deleteJob/${job._id}`, { withCredentials: true });
       if (onDelete) onDelete(job._id); // Notify parent component about the deletion
     } catch (error) {
       console.error('Failed to delete job:', error);

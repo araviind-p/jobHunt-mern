@@ -13,7 +13,7 @@ const Login = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/profile', { withCredentials: true });
+        const response = await axios.get('https://jobhunt-mern.onrender.com/profile', { withCredentials: true });
         if (response.data) {
           navigate('/dashboard');
         }
