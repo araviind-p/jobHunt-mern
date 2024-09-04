@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const handleGoogleLogin = () => {
     // Redirect to the backend route that handles Google OAuth
-    window.location.href = 'http://127.0.0.1:5000/auth/google';
+    window.location.href = 'https://jobhunt-mern.onrender.com/auth/google';
   };
   const navigate = useNavigate()
 
