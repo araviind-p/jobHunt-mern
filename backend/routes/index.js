@@ -51,7 +51,6 @@ router.post('/addJobs', ensureAuth, async (req, res) => {
   }
 });
 
-// routes/auth.js
 router.put('/updateJob/:id', ensureAuth, async (req, res) => {
   if (req.isAuthenticated()) {
     try {

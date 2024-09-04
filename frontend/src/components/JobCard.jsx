@@ -1,7 +1,11 @@
 // JobCard.js
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import EditJobModal from './EditJobModal';
 
 const JobCard = ({ job }) => {
+  const [isEditing, setIsEditing] = useState(false);
+
   const getStatusClasses = (status) => {
     switch (status) {
       case 'applied':
@@ -30,6 +34,15 @@ const JobCard = ({ job }) => {
       <p className={`px-2 py-1 rounded-md text-sm font-medium ${getStatusClasses(job.jobStatus)}`}>
         Status: {job.jobStatus}
       </p>
+      <button
+        onClick={() => setIsEditing(true)}
+        className="mt-2 px-4 py-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+      >
+        Edit
+      </button>
+      {isEditing && (
+        <EditJobModal job={job} setIsEditing={setIsEditing} />
+      )}
     </div>
   );
 };

@@ -28,7 +28,7 @@ const Dashboard = () => {
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, [navigate,handleNewJob]);
 
   const handleLogout = async () => {
     try {
