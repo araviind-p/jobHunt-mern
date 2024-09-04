@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import NoteModal from './NoteModal';
 import JobCard from './JobCard';  // Import the JobCard component
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -28,16 +30,27 @@ const Dashboard = () => {
     };
 
     fetchUserData();
-  }, [navigate,handleNewJob]);
+  }, [navigate, handleNewJob]);
+
+  // Dashboard.js
+  const handleDeleteJob = (jobId) => {
+    setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
+    toast.success("Job deleted");
+  };
+
 
   const handleLogout = async () => {
     try {
       const response = await axios.get('http://localhost:5000/auth/logout', { withCredentials: true });
       if (response.status === 200) {
-        navigate('/');
+        toast.success("Logout success")
+        setTimeout(() => {
+          navigate('/');
+        }, 1000)
       }
     } catch (error) {
       console.error('Logout failed:', error);
+      toast.error(err.message)
     }
   };
 
@@ -83,12 +96,13 @@ const Dashboard = () => {
               {jobs.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                   {jobs.map((job, index) => (
-                    <JobCard key={index} job={job} />
+                    <JobCard key={index} job={job} onDelete={handleDeleteJob} />
                   ))}
                 </div>
               ) : (
                 <p className="mt-4 text-gray-600 dark:text-gray-300">No jobs added yet.</p>
               )}
+
             </div>
           </>
         ) : (
@@ -99,6 +113,7 @@ const Dashboard = () => {
           <NoteModal setIsModalOpen={setIsModalOpen} onSave={handleNewJob} />
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

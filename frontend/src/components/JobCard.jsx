@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa'; // Import the delete icon
 import EditJobModal from './EditJobModal';
+import { toast } from 'react-toastify';
 
 const JobCard = ({ job, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -28,6 +29,7 @@ const JobCard = ({ job, onDelete }) => {
       if (onDelete) onDelete(job._id); // Notify parent component about the deletion
     } catch (error) {
       console.error('Failed to delete job:', error);
+      toast.error('Failed to delete job');
     }
   };
 
@@ -46,7 +48,7 @@ const JobCard = ({ job, onDelete }) => {
       </p>
       <button
         onClick={() => setIsEditing(true)}
-        className="mt-2 px-4 py-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        className="mt-2 px-4 py-2 text-white bg-blue-700 rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
       >
         Edit
       </button>

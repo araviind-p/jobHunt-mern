@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const NoteModal = ({ setIsModalOpen }) => {
   const [companyName, setCompanyName] = useState('');
@@ -22,7 +24,10 @@ const NoteModal = ({ setIsModalOpen }) => {
       // Send the note data to the server
       const response = await axios.post('http://localhost:5000/addJobs', noteData, { withCredentials: true });
       console.log(response.data);
-      setIsModalOpen(false); // Close the modal after saving
+      toast.success("New job added")
+      setTimeout(() => {
+        setIsModalOpen(false); // Close the modal after saving
+      }, 1000)
     } catch (error) {
       console.error('Failed to save note:', error);
     }
@@ -94,6 +99,7 @@ const NoteModal = ({ setIsModalOpen }) => {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
