@@ -85,6 +85,39 @@ router.put('/updateJob/:id', ensureAuth, async (req, res) => {
   }
 });
 
+// routes/auth.js
+router.delete('/deleteJob/:id', ensureAuth, async (req, res) => {
+  if (req.isAuthenticated()) {
+    try {
+      const { id } = req.params;
+
+      // Find the user and update their jobs array
+      const user = await User.findById(req.user._id);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Remove the job from the user's jobs array
+      const jobIndex = user.jobs.findIndex(job => job._id.toString() === id);
+      if (jobIndex === -1) {
+        return res.status(404).json({ message: 'Job not found' });
+      }
+
+      user.jobs.splice(jobIndex, 1); // Remove the job from the array
+
+      await user.save();
+      res.status(200).json({ message: 'Job deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting job:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
+  }
+});
+
+
+
 
 
 module.exports = router;

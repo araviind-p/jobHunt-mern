@@ -1,9 +1,10 @@
 // JobCard.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { FaTrash } from 'react-icons/fa'; // Import the delete icon
 import EditJobModal from './EditJobModal';
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const getStatusClasses = (status) => {
@@ -21,8 +22,17 @@ const JobCard = ({ job }) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/deleteJob/${job._id}`, { withCredentials: true });
+      if (onDelete) onDelete(job._id); // Notify parent component about the deletion
+    } catch (error) {
+      console.error('Failed to delete job:', error);
+    }
+  };
+
   return (
-    <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm">
+    <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm relative">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
         {job.companyName}
       </h3>
@@ -39,6 +49,12 @@ const JobCard = ({ job }) => {
         className="mt-2 px-4 py-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
       >
         Edit
+      </button>
+      <button
+        onClick={handleDelete}
+        className="absolute top-2 right-2 text-red-500 hover:text-red-700 focus:outline-none"
+      >
+        <FaTrash size={20} />
       </button>
       {isEditing && (
         <EditJobModal job={job} setIsEditing={setIsEditing} />
