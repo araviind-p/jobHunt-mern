@@ -18,7 +18,7 @@ app.use(express.json());
 //   credentials: true, // Allow cookies to be sent
 // }));
 
-const allowedOrigins = ['http://localhost:5173', 'https://jobhunt-umen.onrender.com'];
+const allowedOrigins = ['http://localhost:5173', 'https://jobhunt-umen.onrender.com','https://jobhunt-umen.onrender.com/dashboard'];
 
 app.use(cors({
   origin: (origin, callback) => {
