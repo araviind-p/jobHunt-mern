@@ -7,7 +7,7 @@ router.get('/', ensureGuest, (req, res) => {
 })
 
 router.get("/log", ensureAuth, async (req, res) => {
-  res.redirect('http://localhost:5173/dashboard')
+  res.redirect('https://jobhunt-umen.onrender.com/dashboard')
 })
 
 // routes/auth.js
