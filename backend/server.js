@@ -15,10 +15,15 @@ const app = express();
 app.use(express.json());
 
 // Enable CORS
+// app.use(cors({
+//   origin: 'https://jobhunt-umen.onrender.com', // Frontend URL
+//   credentials: true, // Allow credentials (cookies, etc.)
+// }));
 app.use(cors({
-  origin: 'https://jobhunt-umen.onrender.com', // Frontend URL
-  credentials: true, // Allow credentials (cookies, etc.)
+  origin: '*', // Allow all origins (development only)
+  credentials: true,
 }));
+
 
 // Session Configuration
 app.use(session({
