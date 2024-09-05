@@ -3,7 +3,7 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 const User = require('../model/User')
 
 router.get('/', ensureGuest, (req, res) => {
-  res.redirect('http://localhost:5731')
+  res.redirect('https://jobhunt-umen.onrender.com:5731')
 })
 
 router.get("/log", ensureAuth, async (req, res) => {
