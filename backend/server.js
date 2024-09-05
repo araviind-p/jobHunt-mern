@@ -20,9 +20,10 @@ app.use(express.json());
 //   credentials: true, // Allow credentials (cookies, etc.)
 // }));
 app.use(cors({
-  origin: '*', // Allow all origins (development only)
-  credentials: true,
+  origin: ['https://jobhunt-umen.onrender.com', 'https://jobhunt-mern.onrender.com'], // Allow both domains
+  credentials: true, // Allow credentials (cookies, etc.)
 }));
+
 
 
 // Session Configuration
