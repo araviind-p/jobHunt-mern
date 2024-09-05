@@ -28,17 +28,9 @@ app.use(cors({
 
 // Session Configuration
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key', // Use environment variable for secret
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URL || 'mongodb://localhost:27017/job-hunt',
-    collectionName: 'sessions', // Where sessions are stored in MongoDB
-  }),
-  cookie: {
-    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production (over HTTPS)
-    maxAge: 1000 * 60 * 60 * 24 * 7, // Session lasts for 7 days
-  }
 }));
 
 // Passport middleware
