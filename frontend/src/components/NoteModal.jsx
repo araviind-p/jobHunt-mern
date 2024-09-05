@@ -22,7 +22,7 @@ const NoteModal = ({ setIsModalOpen }) => {
     // console.log('Note saved:', noteData);
     try {
       // Send the note data to the server
-      const response = await axios.post('http://localhost:5000/addJobs', noteData, { withCredentials: true });
+      const response = await axios.post('https://jobhunt-mern.onrender.com/addJobs', noteData, { withCredentials: true });
       console.log(response.data);
       toast.success("New job added")
       setTimeout(() => {

@@ -1,6 +1,5 @@
 // import all the things we need  
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const mongoose = require('mongoose')
 const User = require('../model/User')
 
 module.exports = function (passport) {
@@ -9,7 +8,7 @@ module.exports = function (passport) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://localhost:5000/auth/google/callback',
+        callbackURL: 'https://jobhunt-mern.onrender.com/auth/google/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
         //get the user data from google 
@@ -47,9 +46,9 @@ module.exports = function (passport) {
   })
 
   // used to deserialize the user
-  passport.deserializeUser((id, done) => {
+  passport.deserializeUser(async (id, done) => {
     // User.findById(id, (err, user) => done(err, user))
-    User.findById(id).then((user) => {
+    await User.findById(id).then((user) => {
       done(null, user)
     }).catch((err) => {
       done(err, null)

@@ -14,22 +14,28 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Your frontend URL
+  origin: 'https://jobhunt-umen.onrender.com', // Your frontend URL
   credentials: true, // Allow cookies to be sent
 }));
 
 // Configure session middleware
-const sessionOptions = {
-  secret: process.env.SESSION_SECRET || 'your-secret-key', // Use environment variable for secret
+// const sessionOptions = {
+//   secret: process.env.SESSION_SECRET || 'your-secret-key', // Use environment variable for secret
+//   resave: false,
+//   saveUninitialized: false,
+//   store: new MongoStore({
+//     mongoUrl: process.env.MONGODB_URL || 'mongodb://localhost:27017/job-hunt',
+//     collectionName: 'sessions',
+//   }),
+// };
+
+// app.use(session(sessionOptions));
+
+app.use(session({
+  secret: "your_secret_keyyyy",
   resave: false,
   saveUninitialized: false,
-  store: new MongoStore({
-    mongoUrl: process.env.MONGODB_URL || 'mongodb://localhost:27017/job-hunt',
-    collectionName: 'sessions',
-  }),
-};
-
-app.use(session(sessionOptions));
+}))
 
 // Passport middleware
 app.use(passport.initialize());

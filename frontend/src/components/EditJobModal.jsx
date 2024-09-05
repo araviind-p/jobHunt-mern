@@ -21,7 +21,7 @@ const EditJobModal = ({ job, setIsEditing }) => {
         };
 
         try {
-            const response = await axios.put(`http://localhost:5000/updateJob/${job._id}`, updatedJob, { withCredentials: true });
+            const response = await axios.put(`https://jobhunt-mern.onrender.com/updateJob/${job._id}`, updatedJob, { withCredentials: true });
             console.log(response.data);
             toast.success("Updated job details")
             setTimeout(()=>{
