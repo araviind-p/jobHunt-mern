@@ -49,6 +49,11 @@ app.use(passport.session());
 app.use(require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 
+app.get('*', (req, res) => {
+  res.send("wrong url")
+});
+
+
 // Connect to MongoDB and start the server
 const PORT = process.env.PORT || 5000;
 
